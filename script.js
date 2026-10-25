@@ -25,35 +25,20 @@ function getTask(){
     }
     tasks.push(newtask);
     console.log(tasks);
-    let showtasks = document.createElement("div")
-    
-    document.getElementById("task_list").appendChild(showtasks)
-    showtasks.textContent = newtask.title;
+    rendertask(tasks)
     document.getElementById("task").value = ""
-    let status = document.createElement("button")
-    if(newtask.completed == false){
-        status.textContent = "Active";
-    }
-    else{
-        status.textContent = "Completed";
-    }
-    showtasks.appendChild(status)
-    status.addEventListener("click", ()=>{
-        newtask.completed= !newtask.completed
-        if(newtask.completed == false){
-            status.textContent = "Active";
-        }
-        else{
-            status.textContent = "Completed";
-        }
-    });
 }
 
 function rendertask(task){
     document.getElementById("task_list").innerHTML = ""
     task.forEach(element => {
         let showtasks = document.createElement("div")
-    
+        let taskpri =document.createElement("button")
+        taskpri.textContent = element.priority
+        let taskcat =document.createElement("button")
+        taskcat.textContent = element.category
+        let taskdate =document.createElement("button")
+        taskdate.textContent = element.due_date
         document.getElementById("task_list").appendChild(showtasks)
         showtasks.textContent = element.title;
         let status = document.createElement("button")
@@ -63,6 +48,9 @@ function rendertask(task){
         else{
             status.textContent = "Completed";
         }
+        showtasks.append(taskpri)
+        showtasks.append(taskcat)
+        showtasks.append(taskdate)
         showtasks.append(status)
         status.addEventListener("click", ()=>{
         element.completed= !element.completed
@@ -74,6 +62,7 @@ function rendertask(task){
             status.textContent = "Completed";
         }
         rendertask(task)
+        
     });
     }
 )
