@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,25 +11,29 @@ body {
     min-height: 100vh;
     padding: 35px 18px;
     text-align: center;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
     color: #29a6dc;
     background: linear-gradient(135deg, #3696d6, #0b2432, #7aaaca);
 }
 
 h1 {
-    margin-bottom: 22px;
+    margin-bottom: 28px;
     color: #070225;
     font-size: 2.2rem;
     letter-spacing: -1px;
 }
+
+/* Task input */
+
 #task {
     width: min(420px, 65%);
     padding: 13px 16px;
-    border: 2px solid #091d27;
+    border: 2px solid #bae6fd;
     border-radius: 12px;
     outline: none;
-    background: #ffffff;
+    background: #fff;
     color: #183b56;
+    font-family: inherit;
     font-size: 1rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -40,6 +46,9 @@ h1 {
 #task::placeholder {
     color: #94a3b8;
 }
+
+/* Buttons */
+
 button {
     display: inline-block;
     margin: 5px 3px;
@@ -48,8 +57,8 @@ button {
     border-radius: 10px;
     background: #dbeafe;
     color: #04151f;
-    font-family: "Poppins", sans-serif;
-    font-size: 0.95rem;
+    font-family: inherit;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.2s ease;
@@ -63,12 +72,15 @@ button:hover {
 #save_btn {
     padding: 13px 19px;
     background: #0284c7;
-    color: #ffffff;
+    color: #fff;
 }
 
 #save_btn:hover {
     background: #0369a1;
 }
+
+/* Labels and form controls */
+
 label {
     display: inline-block;
     margin: 12px 5px 8px;
@@ -84,25 +96,25 @@ select,
     border: 1px solid #bae6fd;
     border-radius: 9px;
     outline: none;
-    background: #ffffff;
+    background: #fff;
     color: #183b56;
-    font-family: "Poppins", sans-serif;
-    font-size: 0.95rem;
+    font-family: inherit;
+    font-size: 0.9rem;
 }
 
 select:focus,
 #due_date:focus {
     border-color: #0284c7;
 }
-body > br:nth-of-type(3) {
-    display: none;
-}
+
+/* Filters */
 
 #all_tasks,
 #active_tasks,
 #completed_tasks {
     white-space: nowrap;
 }
+
 #task_counter {
     display: inline-block;
     margin: 14px 0;
@@ -111,14 +123,16 @@ body > br:nth-of-type(3) {
     border-radius: 20px;
     background: #fafefab8;
     color: #0369a1;
-    font-family: "Poppins", sans-serif;
     font-weight: 700;
 }
+
+/* Task list container */
+
 #task_list {
     width: min(1100px, 100%);
     margin: 18px auto;
     padding: 18px;
-    border: 1px solid #ffffff;
+    border: 1px solid #fff;
     border-radius: 18px;
     background: #fafefab8;
     box-shadow: 0 12px 35px #0369a112;
@@ -128,118 +142,133 @@ body > br:nth-of-type(3) {
 #task_list:empty {
     display: none;
 }
+
+/* Individual task row */
+
 #task_list > div {
     display: grid;
     grid-template-columns:
-        minmax(120px, 1fr)
-        145px
-        95px
-        105px
-        90px
-        105px;
-
+        minmax(100px, 1fr)
+        repeat(6, minmax(0, 100px));
+    grid-template-areas: "title date due status priority category delete";
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     padding: 14px 16px;
     margin-bottom: 12px;
-
     border: 1px solid #c5e2fa;
     border-radius: 12px;
     background: #e8f4ff;
     color: #183b56;
-
-    font-family: "Poppins", sans-serif;
-    font-size: 1.05rem;
+    font-family: inherit;
+    font-size: 1rem;
     font-weight: 500;
-    overflow-wrap: anywhere;
     line-height: 1.5;
 }
 
 #task_list > div:last-child {
     margin-bottom: 0;
 }
-#task_list button {
+
+/* Task title */
+
+#task_list .task-title {
+    grid-area: title;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* All task buttons */
+
+#task_list > div > button {
     width: 100%;
     min-width: 0;
     margin: 0;
     padding: 10px 5px;
-
     border: none;
     border-radius: 9px;
     background: #dbeafe;
     color: #183b56;
-
-    font-family: "Poppins", sans-serif;
-    font-size: 0.85rem;
+    font-family: inherit;
+    font-size: 0.78rem;
     font-weight: 600;
     text-align: center;
-    white-space: normal;
-    overflow-wrap: anywhere;
-
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-#task_list button:hover {
-    background: #bae6fd;
-    transform: translateY(-1px);
-}
-#task_list button:nth-of-type(1) {
+/* Button order follows your JavaScript:
+   1 Delete, 2 Priority, 3 Category,
+   4 Date, 5 Due status, 6 Active/Completed */
+
+#task_list > div > button:nth-of-type(1) {
+    grid-area: delete;
     background: #fee2e2;
     color: #b91c1c;
 }
 
-#task_list button:nth-of-type(1):hover {
+#task_list > div > button:nth-of-type(1):hover {
     background: #fecaca;
-}
-#task_list > div > button:nth-of-type(1) {
-    grid-column: 6;
-    grid-row: 1;
 }
 
 #task_list > div > button:nth-of-type(2) {
-    grid-column: 3;
-    grid-row: 1;
+    grid-area: priority;
 }
 
 #task_list > div > button:nth-of-type(3) {
-    grid-column: 4;
-    grid-row: 1;
+    grid-area: category;
+    background: #bae6fd;
 }
 
 #task_list > div > button:nth-of-type(4) {
-    grid-column: 2;
-    grid-row: 1;
+    grid-area: date;
 }
 
 #task_list > div > button:nth-of-type(5) {
-    grid-column: 5;
-    grid-row: 1;
+    grid-area: due;
 }
-#task_list button:nth-of-type(4):empty {
+
+#task_list > div > button:nth-of-type(6) {
+    grid-area: status;
+}
+
+/* Hide empty date/due buttons without removing their grid slots */
+
+#task_list > div > button:nth-of-type(4):empty,
+#task_list > div > button:nth-of-type(5):empty {
     visibility: hidden;
 }
+
+/* Medium screens */
+
 @media (max-width: 1000px) {
-    #task_list > div {
-        grid-template-columns:
-            minmax(100px, 1fr)
-            120px
-            80px
-            90px
-            90px
-            78px;
-        gap: 8px;
+    body {
+        padding: 28px 14px;
+    }
+
+    #task_list {
         padding: 12px;
     }
 
-    #task_list button {
-        font-size: 0.8rem;
-        padding: 9px 4px;
+    #task_list > div {
+        grid-template-columns:
+            minmax(80px, 1fr)
+            repeat(6, minmax(0, 75px));
+        gap: 7px;
+        padding: 12px;
+    }
+
+    #task_list > div > button {
+        padding: 9px 3px;
+        font-size: 0.68rem;
     }
 }
+
+/* Small screens: keep buttons on the same line */
+
 @media (max-width: 650px) {
     body {
-        padding: 25px 12px;
+        padding: 22px 8px;
     }
 
     h1 {
@@ -247,11 +276,12 @@ body > br:nth-of-type(3) {
     }
 
     #task {
-        width: 62%;
+        width: 68%;
+        padding: 12px 9px;
     }
 
     #save_btn {
-        padding: 12px 10px;
+        padding: 12px 8px;
     }
 
     label {
@@ -263,7 +293,7 @@ body > br:nth-of-type(3) {
     #due_date {
         margin-right: 4px;
         padding: 9px 6px;
-        max-width: 42%;
+        max-width: 48%;
     }
 
     #all_tasks,
@@ -271,28 +301,29 @@ body > br:nth-of-type(3) {
     #completed_tasks {
         margin: 4px 1px;
         padding: 9px 10px;
-        font-size: 0.82rem;
+        font-size: 0.78rem;
+    }
+
+    #task_counter {
+        font-size: 0.85rem;
     }
 
     #task_list {
-        padding: 10px;
+        padding: 6px;
     }
 
     #task_list > div {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 12px;
-    }
-
-    #task_list > div {
-        font-size: 1rem;
-    }
-
-    #task_list button {
-        flex: 1 1 28%;
-        width: auto;
+        grid-template-columns:
+            minmax(55px, 1fr)
+            repeat(6, minmax(0, 43px));
+        gap: 4px;
+        padding: 8px 5px;
         font-size: 0.8rem;
-        padding: 9px 6px;
+    }
+
+    #task_list > div > button {
+        padding: 8px 1px;
+        font-size: 0.56rem;
+        border-radius: 6px;
     }
 }

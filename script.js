@@ -40,8 +40,15 @@ function rendertask(task){
         taskcat.textContent = element.category
         let taskdate =document.createElement("button")
         taskdate.textContent = element.due_date
-        document.getElementById("task_list").appendChild(showtasks)
-        showtasks.textContent = element.title;
+        let taskdue =document.createElement("button")
+        taskdue.textContent = getduestatus(element)
+
+        let tasktitle = document.createElement("span");
+        tasktitle.textContent = element.title;
+        tasktitle.className = "task-title";
+
+        document.getElementById("task_list").appendChild(showtasks);
+        showtasks.appendChild(tasktitle);
         let delete_btn = document.createElement("button")
         delete_btn.textContent = "DELETE";
         delete_btn.addEventListener("click", ()=>{
@@ -66,6 +73,7 @@ function rendertask(task){
         showtasks.append(taskpri)
         showtasks.append(taskcat)
         showtasks.append(taskdate)
+        showtasks.append(taskdue)
         showtasks.append(status)
         status.addEventListener("click", ()=>{
         element.completed= !element.completed
@@ -83,6 +91,28 @@ function rendertask(task){
     });
     }
 )
+}
+function getduestatus(task){
+    if(task.completed==true ){
+        return "Completed"
+    }
+    else if(task.due_date==""){
+        return
+    }
+    else{
+        let today = new Date().getFullYear()+"-"+(new Date().getMonth()+1).toString().padStart(2, "0") + "-"+new Date().getDate().toString().padStart(2, "0")
+        
+        if (task.due_date<today ){
+            return "Overdue"
+        }
+        else if (task.due_date==today ){
+            return "Due today"
+        }
+        else{
+            return "Upcoming"
+        }
+        
+    }
 }
 function getFilteredTasks(curr_filter){
     
