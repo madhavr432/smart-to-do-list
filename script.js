@@ -1,4 +1,5 @@
 let tasks = [];
+let curr_filter = "all";
 function getTask(){
     
     let task = document.getElementById("task").value
@@ -48,6 +49,36 @@ function getTask(){
     });
 }
 
+function rendertask(task){
+    document.getElementById("task_list").innerHTML = ""
+    task.forEach(element => {
+        let showtasks = document.createElement("div")
+    
+        document.getElementById("task_list").appendChild(showtasks)
+        showtasks.textContent = element.title;
+        let status = document.createElement("button")
+        if(element.completed == false){
+            status.textContent = "Active";
+        }
+        else{
+            status.textContent = "Completed";
+        }
+        showtasks.append(status)
+        status.addEventListener("click", ()=>{
+        element.completed= !element.completed
+        if(element.completed == false){
+            status.textContent = "Active";
+            
+        }
+        else{
+            status.textContent = "Completed";
+        }
+        rendertask(task)
+    });
+    }
+)
+}
+
 let button = document.getElementById("save_btn")
 button.addEventListener("click", getTask);
 let press_enter = document.getElementById("task")
@@ -56,6 +87,28 @@ const check =(keydown)=>{
         getTask();
     }
 }
+
 press_enter.addEventListener("keydown",check)
+let active_button = document.getElementById("active_tasks")
+active_button.addEventListener("click", ()=>{
+    let activetask = tasks.filter((task)=>{
+        if(task.completed==false){
+            
+            return true
+        }
+    })
+    rendertask(activetask)
+})
+let completed_button = document.getElementById("completed_tasks")
+completed_button.addEventListener("click", ()=>{
+    let completedtask = tasks.filter((task)=>{
+        if(task.completed==true){
+            
+            return true
+        }
+    })
+    rendertask(completedtask)
+})
+
 
 
