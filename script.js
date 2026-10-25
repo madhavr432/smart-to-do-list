@@ -25,7 +25,7 @@ function getTask(){
     }
     tasks.push(newtask);
     console.log(tasks);
-    rendertask(tasks)
+    getFilteredTasks(curr_filter)
     document.getElementById("task").value = ""
 }
 
@@ -60,12 +60,36 @@ function rendertask(task){
         }
         else{
             status.textContent = "Completed";
+            
         }
-        rendertask(task)
-        
+        getFilteredTasks(curr_filter)
+            
     });
     }
 )
+}
+function getFilteredTasks(curr_filter){
+    if(curr_filter=="all"){
+        rendertask(tasks)
+    }
+    else if(curr_filter == "active"){
+        let activetask = tasks.filter((task)=>{
+            if(task.completed==false){
+                
+                return true
+            }
+        })
+        rendertask(activetask)
+    }
+    else{
+        let completedtask = tasks.filter((task)=>{
+            if(task.completed==true){
+                
+                return true
+            }
+        })
+        rendertask(completedtask)
+    }
 }
 
 let button = document.getElementById("save_btn")
@@ -80,23 +104,19 @@ const check =(keydown)=>{
 press_enter.addEventListener("keydown",check)
 let active_button = document.getElementById("active_tasks")
 active_button.addEventListener("click", ()=>{
-    let activetask = tasks.filter((task)=>{
-        if(task.completed==false){
-            
-            return true
-        }
-    })
-    rendertask(activetask)
+    curr_filter = "active"
+    getFilteredTasks(curr_filter)
 })
 let completed_button = document.getElementById("completed_tasks")
 completed_button.addEventListener("click", ()=>{
-    let completedtask = tasks.filter((task)=>{
-        if(task.completed==true){
-            
-            return true
-        }
-    })
-    rendertask(completedtask)
+    curr_filter = "completed"
+    getFilteredTasks(curr_filter)
+})
+let all_button = document.getElementById("all_tasks")
+all_button.addEventListener("click", ()=>{
+    curr_filter = "all"
+    
+    getFilteredTasks(curr_filter)
 })
 
 
