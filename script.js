@@ -42,7 +42,21 @@ function rendertask(task){
         taskdate.textContent = element.due_date
         document.getElementById("task_list").appendChild(showtasks)
         showtasks.textContent = element.title;
+        let delete_btn = document.createElement("button")
+        delete_btn.textContent = "DELETE";
+        delete_btn.addEventListener("click", ()=>{
+            tasks = tasks.filter((task)=>{
+            
+            
+                if(task.task_id!=element.task_id){
+                    return true
+                }
+            })
+            getFilteredTasks(curr_filter)
+        });
+        showtasks.append(delete_btn)
         let status = document.createElement("button")
+        
         if(element.completed == false){
             status.textContent = "Active";
         }
@@ -63,6 +77,7 @@ function rendertask(task){
             status.textContent = "Completed";
             
         }
+        
         getFilteredTasks(curr_filter)
             
     });
