@@ -1,5 +1,6 @@
 let tasks = [];
 let curr_filter = "all";
+
 function getTask(){
     
     let task = document.getElementById("task").value
@@ -69,25 +70,35 @@ function rendertask(task){
 )
 }
 function getFilteredTasks(curr_filter){
+    
     if(curr_filter=="all"){
+        let all_count = tasks.length;
+        document.getElementById("task_counter").textContent = "Total tasks: "+all_count;
         rendertask(tasks)
     }
+    
     else if(curr_filter == "active"){
         let activetask = tasks.filter((task)=>{
+            
+            
             if(task.completed==false){
-                
                 return true
             }
         })
+        let active_count = activetask.length;
+        document.getElementById("task_counter").textContent = "Task Remaining: "+active_count;
         rendertask(activetask)
     }
     else{
         let completedtask = tasks.filter((task)=>{
+            
             if(task.completed==true){
                 
                 return true
             }
         })
+        let completed_count = completedtask.length;
+        document.getElementById("task_counter").textContent = "Task completed: "+completed_count;
         rendertask(completedtask)
     }
 }
